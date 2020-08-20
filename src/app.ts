@@ -1,11 +1,5 @@
 import { ResponseError, Context } from 'umi-request';
-import {
-  NavBarProps,
-  TitleListItem,
-  NavBarListItem,
-  TabBarProps,
-  TabBarListItem,
-} from 'alita';
+import { NavBarProps, TitleListItem, NavBarListItem, TabBarProps, TabBarListItem } from 'alita';
 
 import HomeGary from './assets/demoIcon/home.png';
 import HomeBlue from './assets/demoIcon/home1.png';
@@ -25,12 +19,15 @@ const middleware = async (ctx: Context, next: any) => {
 export const request = {
   prefix: '', // 统一的请求头
   middlewares: [middleware],
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json; charset=utf-8',
+  },
   errorHandler: (error: ResponseError) => {
     // 集中处理错误
     console.log(error);
   },
 };
-
 
 const titleList: TitleListItem[] = [
   {
