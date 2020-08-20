@@ -1,16 +1,16 @@
 import { Reducer } from 'redux';
-import { query } from '@/services/api';
+import { queryHeroList, getHeroDetails } from '@/services/api';
 import { Effect } from '@/models/connect';
 
 export interface DvaModelState {
-  name: string;
+  heroList: any[];
 }
 
 export interface DvaModelType {
   namespace: 'dva';
   state: DvaModelState;
   effects: {
-    query: Effect;
+    fetch: Effect;
   };
   reducers: {
     save: Reducer<DvaModelState>;
@@ -21,16 +21,19 @@ const DvaModel: DvaModelType = {
   namespace: 'dva',
 
   state: {
-    name: '',
+    heroList: [],
   },
 
   effects: {
-    *query({ payload }, { call, put }) {
-      const data = yield call(query, payload);
-      console.log(data)
+    *fetch({ payload }, { call, put }) {
+      const data = yield call(queryHeroList);
+      const detail = yield call(getHeroDetails, { ename: 110 });
+      console.log(detail);
       yield put({
         type: 'save',
-        payload: { name: data.text },
+        payload: {
+          heroList: data,
+        },
       });
     },
   },
